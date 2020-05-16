@@ -19,44 +19,54 @@
                                 
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
-                                      <input formControlName="id" matInput placeholder="ID">
+                                      <input formControlName="id" matInput placeholder="ID*">
+                                      <!-- <input *ngIf="id.valid" formControlName="id" matInput placeholder="ID"> -->
+                                      <!-- <input formControlName="id" matInput placeholder="ID"> -->
+
                                     </mat-form-field>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <mat-form-field class="example-full-width">
+                                    <!-- <mat-form-field class="example-full-width">
                                       <input formControlName="birthday" matInput placeholder="Birthday (yyyy/mm/dd)" type="text">
+                                    </mat-form-field> -->
+                                    <mat-form-field>
+                                      <mat-label>Birthday*</mat-label>
+                                      <input formControlName="birthday" matInput [matDatepicker]="picker">
+                                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                      <mat-datepicker #picker></mat-datepicker>
                                     </mat-form-field>
                                 </div>
+
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                   <mat-form-field class="example-full-width">
-                                    <input formControlName="firstName" matInput placeholder="Fist Name" type="text">
+                                    <input (change)="upper_first_letter()" [(ngModel)]="firstName.value" formControlName="firstName" matInput placeholder="Fist Name*" type="text" >
                                   </mat-form-field>
                                 </div>
                                 <div class="col-md-6">
                                   <mat-form-field class="example-full-width">
-                                    <input formControlName="lastName" matInput placeholder="Last Name" type="text">
+                                    <input (change)="upper_first_letter()" [(ngModel)]="lastName.value" formControlName="lastName" matInput placeholder="Last Name*" type="text">
                                   </mat-form-field>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                   <mat-form-field class="example-full-width">
-                                    <input formControlName="email" matInput placeholder="Email Address" type="email">
+                                    <input formControlName="email" matInput placeholder="Email Address*" type="email">
                                   </mat-form-field>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                   <mat-form-field class="example-full-width">
-                                    <input formControlName="address" matInput placeholder="Address" type="text">
+                                    <input formControlName="address" matInput placeholder="Address*" type="text">
                                   </mat-form-field>
                                 </div>
                                 <div class="col-md-6">
                                   <mat-form-field class="example-full-width">
-                                    <input formControlName="phone" matInput placeholder="Phone Number" type="text">
+                                    <input formControlName="phone" matInput placeholder="Phone Number*" type="text">
                                   </mat-form-field>
                                 </div>
                             
@@ -64,9 +74,15 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                  <mat-form-field class="example-full-width">
+                                  <!-- <mat-form-field class="example-full-width">
                                     <input formControlName="height" matInput placeholder="Height (cm)" type="text">
-                                  </mat-form-field>
+                                  </mat-form-field> -->
+                                      <mat-form-field>
+                                        <mat-label>Height (cm)*</mat-label>
+                                        <mat-select formControlName="height">
+                                          <mat-option *ngFor="let i of numbers" [value]="i">{{i}}</mat-option>
+                                        </mat-select>
+                                      </mat-form-field>
                                 </div>
                                                      
                             </div>
@@ -76,16 +92,10 @@
                                   <mat-form-field class="example-full-width">
                                      <textarea formControlName="comments" matInput placeholder="Comments"></textarea>
                                    </mat-form-field>
-                                    <!-- <div class="form-group">
-  
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
-                                            <textarea class="form-control" rows="5"></textarea>
-                                        </div>
-                                    </div> -->
+
                                 </div>
                             </div>
-                            <button mat-raised-button type="submit" class="btn btn-info pull-right">Save</button>
+                            <button mat-raised-button type="submit" class="btn btn-info pull-right" [disabled]="!form.valid">Save</button>
                             <div class="clearfix"></div>
                         </form>
                     </div>

@@ -27,7 +27,8 @@ export class DataService {
   }
 
   update(resource) {
-    return this.http.patch(this.url + '/' + resource.id, JSON.stringify({ isRead: true }))
+    console.log(resource);
+    return this.http.patch(this.url + '/' + resource.id, resource)
       .map(response => response.json())      
       .catch(this.handleError);
   }
@@ -36,6 +37,13 @@ export class DataService {
     return this.http.delete(this.url + '/' + id)
       .map(response => response.json())
       .toPromise()
+      .catch(this.handleError);
+  }
+  
+  getOne(resource) {
+    console.log(resource)
+    return this.http.get(this.url, resource)
+      .map(response => response.json())
       .catch(this.handleError);
   }
 

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PatientsService } from 'app/services/patients.service';
 import { Utils } from 'app/utils';
+import { BadRequestError } from 'common/bad-request-error';
+import { AppError } from 'common/app-error';
 
 @Component({
   selector: 'app-new-patient',
@@ -11,6 +13,7 @@ import { Utils } from 'app/utils';
 export class NewPatientComponent implements OnInit {
 
   form: FormGroup;
+  numbers=[];
   constructor(private service: PatientsService, fb: FormBuilder) {
     this.form = fb.group({
       id: ['', Validators.required],
@@ -23,6 +26,9 @@ export class NewPatientComponent implements OnInit {
       height: ['', Validators.required],
       comments: [''],
     });
+    for (var i = 140; i <= 200; i++) {
+      this.numbers.push(i);
+    }
    }
 
   ngOnInit(): void {
@@ -37,19 +43,24 @@ export class NewPatientComponent implements OnInit {
   get phone() {return this.form.get('phone');}
   get height() {return this.form.get('height');}
   
+  upper_first_letter() {
+    if(this.firstName.value)
+      this.firstName.setValue( this.firstName.value[0].toUpperCase() + this.firstName.value.substr(1).toLowerCase());
+    if(this.lastName.value)
+      this.lastName.setValue( this.lastName.value[0].toUpperCase() + this.lastName.value.substr(1).toLowerCase());
+    }
   addNewPatient(){
-    console.log("add patient ");
     var patientDetails = this.form.value;
-    console.log(patientDetails);
     this.service.create(patientDetails).subscribe(patient => {
       var type = 'success';
       var message = 'Patient: '+patient.firstName +' '+patient.lastName+ " added successfly"
-      //new AlertPopupComponent(message, 'how_to_reg', type);
-      //this.showNotification('top','center', type, message, 'how_to_reg')
       Utils.showNotification('how_to_reg', message, type);
+    }, (error: AppError) => {
+        var type = 'danger';
+        var message = "Patient already exists"
+        Utils.showNotification('error', message, type);
+      
     });
-    console.log("add patient after");
-
   }
-
+  
 }

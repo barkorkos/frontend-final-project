@@ -23,6 +23,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { DataService } from './services/data.service';
 import { PatientsService } from './services/patients.service';
 import { AppErrorHandler } from 'common/app-error-handler';
+import { TerapistService } from './services/terapist.service';
 
 @NgModule({
   imports: [
@@ -46,6 +47,7 @@ import { AppErrorHandler } from 'common/app-error-handler';
   providers: [
     DataService,
     PatientsService,
+    TerapistService,
     { provide: ErrorHandler, useClass: AppErrorHandler},
   ],
   bootstrap: [AppComponent]
