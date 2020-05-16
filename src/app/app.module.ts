@@ -25,6 +25,7 @@ import { PatientsService } from './services/patients.service';
 import { AppErrorHandler } from 'common/app-error-handler';
 import { AlertPopupComponent } from './alert-popup/alert-popup.component';
 
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,

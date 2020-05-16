@@ -1,3 +1,4 @@
+import { PatientAreaComponent } from './../../patient-area/patient-area.component';
 import { Routes } from '@angular/router';
 
 import { DashboardComponent } from '../../dashboard/dashboard.component';
@@ -9,6 +10,7 @@ import { UserProfileComponent } from '../../user-profile/user-profile.component'
 import { NotificationsComponent } from '../../notifications/notifications.component';
 // import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import {NewPatientComponent} from '../../new-patient/new-patient.component'
+
 import { from } from 'rxjs';
 export const AdminLayoutRoutes: Routes = [
 
@@ -21,4 +23,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'notifications',  component: NotificationsComponent },
     // { path: 'upgrade',        component: UpgradeComponent },
     { path: 'add-patient',   component: NewPatientComponent },
+    { path: 'patient-area',   component: PatientAreaComponent },
 ];

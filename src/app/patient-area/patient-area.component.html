@@ -1,0 +1,193 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-1"></div>
+      <!-- <div class="collapse navbar-collapse justify-content-end" id="navigation"> -->
+      <form class="navbar-form">
+        <div class="input-group no-border">
+          <input #patientToSearch type="text" value="" class="form-control" placeholder="Search by ID...">
+          <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon"
+            (click)="onClickSearchPatient(patientToSearch.value)">
+            <i class="material-icons">search</i>
+            <div class="ripple-container"></div>
+          </button>
+        </div>
+      </form>
+      <!-- </div> -->
+    </div>
+
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-md-10">
+        <div class="card">
+          <div class="card-header card-header-tabs card-header-info">
+            <div class="nav-tabs-navigation">
+              <div class="nav-tabs-wrapper">
+                <ul class="nav nav-tabs" data-tabs="tabs">
+                  <li class="nav-item">
+                    <a mat-button class="nav-link active" href="#patientdetails" data-toggle="tab" class="card-title">
+                      <i class="material-icons">assignment</i>Patient Details
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a mat-button class="nav-link" href="#history" data-toggle="tab" class="card-title">
+                      <i class="material-icons">restore</i>Treatments History
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="tab-content">
+              <div class="tab-pane active" id="patientdetails">
+
+
+                <form [formGroup]="form" (ngSubmit)="updatePatientDetails()">
+                  <div class="row">
+                    <div class="col-md-5">
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Rehabilitation Department" disabled>
+                      </mat-form-field>
+                    </div>
+
+                    <div class="col-md-3">
+                      <mat-form-field class="example-full-width">
+                        <input formControlName="id" matInput placeholder="ID">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                      <mat-form-field class="example-full-width">
+                        <input formControlName="birthday" matInput placeholder="Birthday (yyyy-mm-dd)" type="text">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <input formControlName="firstName" matInput placeholder="Fist Name" type="text">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <input formControlName="lastName" matInput placeholder="Last Name" type="text">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <mat-form-field class="example-full-width">
+                        <input formControlName="email" matInput placeholder="Email Address" type="email">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <input formControlName="address" matInput placeholder="Address" type="text">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <input formControlName="phone" matInput placeholder="Phone Number" type="text">
+                      </mat-form-field>
+                    </div>
+
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <input formControlName="height" matInput placeholder="Height (cm)" type="text">
+                      </mat-form-field>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+
+                      <mat-form-field class="example-full-width">
+                        <textarea formControlName="comments" matInput placeholder="Comments"></textarea>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <button mat-raised-button type="submit" class="btn btn-info pull-right">Update</button>
+                  <div class="clearfix"></div>
+                </form>
+              </div>
+
+
+
+              <div class="tab-pane" id="history">
+                <!-- <div class="container-fluid"> -->
+                <div class="row">
+                  <div class="col-md-12">
+                    <!-- <div class="card">
+                       
+                        <div class="card-body"> -->
+                    <div class="table-responsive">
+                      <mat-table [dataSource]="dataSource">
+
+                        <ng-container matColumnDef="treatment_time">
+                          <mat-header-cell *matHeaderCellDef>
+                            <h6><b>Date</b></h6>
+                          </mat-header-cell>
+                          <mat-cell *matCellDef="let treatment">{{treatment.treatment_time.slice(0,10)}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="game_name">
+                          <mat-header-cell *matHeaderCellDef>
+                            <h6><b>Game</b></h6>
+                          </mat-header-cell>
+                          <mat-cell *matCellDef="let treatment">{{treatment.game_name}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="hand_in_therapy">
+                          <mat-header-cell *matHeaderCellDef>
+                            <h6><b>Hand</b></h6>
+                          </mat-header-cell>
+                          <mat-cell *matCellDef="let treatment">{{treatment.hand_in_therapy}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="treatment_duration">
+                          <mat-header-cell *matHeaderCellDef>
+                            <h6><b>Duration(m)</b></h6>
+                          </mat-header-cell>
+                          <mat-cell *matCellDef="let treatment">{{treatment.treatment_duration}}</mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="bubble_timeout">
+                          <mat-header-cell *matHeaderCellDef>
+                            <h6><b>Bubble Time-out(sec)</b></h6>
+                          </mat-header-cell>
+                          <mat-cell *matCellDef="let treatment">{{treatment.bubble_timeout}}</mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: tableColumns"></mat-row>
+                      </mat-table>
+
+
+                    </div>
+                    <!-- </div>
+                      </div> -->
+                  </div>
+
+                </div>
+                <!-- </div> -->
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-1">
+      
+    </div>
+  </div>
+</div>
