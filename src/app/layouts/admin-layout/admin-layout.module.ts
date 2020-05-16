@@ -10,12 +10,14 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import {MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
-import {MatRippleModule} from '@angular/material/core';
+import {MatRippleModule, MatNativeDateModule} from '@angular/material/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
 import {NewPatientComponent} from '../../new-patient/new-patient.component';
+
 import { PatientAreaComponent } from 'app/patient-area/patient-area.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   imports: [
@@ -29,7 +31,12 @@ import { PatientAreaComponent } from 'app/patient-area/patient-area.component';
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+
     MatTableModule,
+
+    MatDatepickerModule,
+    MatNativeDateModule,
+
   ],
   declarations: [
     DashboardComponent,

@@ -34,6 +34,7 @@ export class DataService {
   }
 
   update(resource) {
+    console.log(resource);
     return this.http.patch(this.url + '/' + resource.id, resource)
       .map(response => response.json())      
       .catch(this.handleError);
@@ -45,7 +46,7 @@ export class DataService {
       .toPromise()
       .catch(this.handleError);
   }
-
+  
   private handleError(error: Response) {
     if (error.status === 400)
       return Observable.throw(new BadRequestError(error.json()));

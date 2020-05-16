@@ -1,8 +1,10 @@
 import { ErrorHandler } from '@angular/core';
+import { Utils } from 'app/utils';
+import { from } from 'rxjs';
 
 export class AppErrorHandler implements ErrorHandler{
     handleError(error){
-        alert('An unexpected error occurred,');
+        Utils.showNotification('error', 'An unexpected error occurred', 'danger');
         console.log(error);
     }
 }
