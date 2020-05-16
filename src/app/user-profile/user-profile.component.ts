@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TerapistService } from 'app/services/terapist.service';
 import { Utils } from 'app/utils';
 import { AppError } from 'common/app-error';
+import { PasswordValidators } from './password.validators';
 
 @Component({
   selector: 'app-user-profile',
@@ -21,12 +22,14 @@ export class UserProfileComponent implements OnInit {
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       address: ['', Validators.required],
-      phone: ['', Validators.required],
+      phone: ['', [Validators.required, Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-/0-9]*$')]],
     }); 
     this.changePasswordForm = fb.group({
       oldPassword: ['', Validators.required],
-      newPassword: ['', Validators.required],
+      newPassword: ['', [Validators.required, Validators.pattern('^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$')]],
       confirmPassword: ['', Validators.required],
+    }, {
+      validator: PasswordValidators.passwordsShouldMatch
     }); 
 
 
@@ -38,6 +41,17 @@ export class UserProfileComponent implements OnInit {
       this.updateDetailsForm.controls['id'].disable();
     });
   }
+  
+  
+  get phone() {return this.updateDetailsForm.get('phone');}
+  get email() {return this.updateDetailsForm.get('email');}
+
+  get oldPassword() {return this.changePasswordForm.get('oldPassword');}
+  get newPassword() {return this.changePasswordForm.get('newPassword');}
+  get confirmPassword() {return this.changePasswordForm.get('confirmPassword');}
+
+
+  
   changePassword() { }
   
   updateDetails() {

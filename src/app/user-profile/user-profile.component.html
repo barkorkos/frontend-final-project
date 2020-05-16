@@ -20,9 +20,7 @@
                               <div class="col-6">
                                   <mat-form-field class="example-full-width">
                                     <input  formControlName="email" matInput placeholder="Email address" type="email" [(ngModel)]="terapist.email">
-                                    <!-- <input  formControlName="email" *ngIf="!updateDetailsForm.email.requierd"  matInput placeholder="Email address" type="email" [(ngModel)]="terapist.email"> -->
-                                    <!-- <input  formControlName="email" *ngIf="updateDetailsForm.email.requierd"  matInput placeholder="Email address (requierd)" type="email" [(ngModel)]="terapist.email"> -->
-                                    <!-- <mat-hint class="text-danger pull-right">Email is requierd!</mat-hint> -->
+                                    <mat-hint class="text-danger" *ngIf="email.errors?.email">Invalid Email</mat-hint>
                                   </mat-form-field>
                               </div>
                           </div>
@@ -55,8 +53,7 @@
                               <div class="col-6">
                                 <mat-form-field class="example-full-width">
                                   <input formControlName="phone"   matInput placeholder="Phone Number" type="text" [(ngModel)]="terapist.phone">
-                                  <!-- <input formControlName="phone" *ngIf="!updateDetailsForm.phone.requierd"  matInput placeholder="Phone Number" type="text" [(ngModel)]="terapist.phone"> -->
-                                  <!-- <input formControlName="phone" *ngIf="updateDetailsForm.phone.requierd"  matInput placeholder="Phone Number (requierd)" type="text" [(ngModel)]="terapist.phone"> -->
+                                  <mat-hint class="text-danger" *ngIf="phone.errors?.pattern">Invalid Phone Number</mat-hint>
                                 </mat-form-field>
                               </div>
                           </div>
@@ -91,6 +88,7 @@
                               <div class="col-6">
                                 <mat-form-field class="example-full-width">
                                   <input  formControlName="newPassword" matInput placeholder="New Password" type="password">
+                                  <mat-hint class="text-danger" *ngIf="newPassword.errors?.pattern">Password must contain minimum 8 characters, at least one letter, one number and one special character</mat-hint>
                                 </mat-form-field>
                               </div>
                           </div>
@@ -98,6 +96,7 @@
                               <div class="col-6">
                                 <mat-form-field class="example-full-width">
                                   <input  formControlName="confirmPassword" matInput placeholder="Confirm Password" type="text">
+                                  <mat-hint class="text-danger" *ngIf="confirmPassword.valid  && changePasswordForm.invalid && changePasswordForm.errors?.passwordsShouldMatch">Passwords do not match</mat-hint>
                                 </mat-form-field>
                               </div>
                           </div>

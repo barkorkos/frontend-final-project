@@ -4,6 +4,7 @@ import { PatientsService } from 'app/services/patients.service';
 import { Utils } from 'app/utils';
 import { BadRequestError } from 'common/bad-request-error';
 import { AppError } from 'common/app-error';
+// import * as THREE from 'tree';
 
 @Component({
   selector: 'app-new-patient',
@@ -22,7 +23,7 @@ export class NewPatientComponent implements OnInit {
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       address: ['', Validators.required],
-      phone: ['', Validators.required],
+      phone: ['', [Validators.required, Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-/0-9]*$')]],
       height: ['', Validators.required],
       comments: [''],
     });
