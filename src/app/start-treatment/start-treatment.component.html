@@ -1,0 +1,141 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-1"></div>
+            <!-- <div class="collapse navbar-collapse justify-content-end" id="navigation"> -->
+            
+            <!-- </div> -->
+        </div>
+
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title"><b>Start Treatment</b></h4>
+                        
+                    </div>
+                    <div class="card-body">
+                      
+                        <form [formGroup]="form" (ngSubmit)="onClickStart()">
+                            <div class="row">
+                                <div class="col-md-5">
+                                <form class="navbar-form">
+                                    <div class="input-group no-border">
+                                        <input #patientToSearch ([ngModel])="patientInTerapy.value" type="text" value="" class="form-control" placeholder="Enter Patient ID...">
+                                        <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon"
+                                            (click)="onSearchID(patientToSearch.value)">
+                                            <i class="material-icons">search</i>
+                                            <div class="ripple-container"></div>
+                                        </button>
+                                    </div>
+                                </form>
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-5">
+                                    <div class="logo">
+                                        
+                                            <div class="logo-img">
+                                                
+                                                <img src="/assets/img/bubblepic.png" height="150" width="300"/>
+                                            
+                                          </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row"><br></div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                <p class="card-category"><b><u>Last Theraphy Details:</u></b></p>
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-5">
+                                    <p class="card-category"><b><u>Enter Theraphy Details:</u></b></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <mat-form-field class="example-full-width mb-0">
+                                        <input  formControlName="oldDate" matInput placeholder="Date"  disabled>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-5">
+                                    <mat-form-field>
+                                        <mat-label>Date*</mat-label>
+                                        <input formControlName="newDate" matInput [matDatepicker]="picker">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                      </mat-form-field>
+                                </div>
+                            </div>
+                          
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <mat-form-field class="example-full-width mb-0">
+                                        <input  formControlName="oldDurationTime" matInput placeholder="Game Duration Time (m)"  disabled>
+
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-5">
+                                    <mat-form-field class="example-full-width mb-0">
+                                        <input  formControlName="newDurationTime" matInput placeholder="Game Duration Time (m)*">
+                                        <mat-hint class="text-danger" *ngIf="newDurationTime.errors?.pattern">Invalid Game Duration Time</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <mat-form-field class="example-full-width mb-0">
+                                        <input  formControlName="oldBubbleTimeOut" matInput placeholder="Bubbles Time-out (sec)"  disabled>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-5">
+                                    <mat-form-field class="example-full-width mb-0">
+                                        <input  formControlName="newBubbleTimeOut" matInput placeholder="Bubbles Time-out (sec)*">
+                                        <mat-hint class="text-danger" *ngIf="newBubbleTimeOut.errors?.pattern">Invalid Bubbles Time-out</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                      
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <mat-form-field class="example-full-width mb-0">
+                                        <input  formControlName="oldHand" matInput placeholder="Hand"  disabled>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-5">
+                                    <!-- <mat-radio-group aria-label="Select an option">
+                                        <mat-radio-button value="1">Right</mat-radio-button>
+                                        <mat-radio-button value="2">Left</mat-radio-button>
+                                      </mat-radio-group>
+                                    -->
+                                    <mat-form-field class="example-full-width mb-0">
+                                        <input formControlName="newHand" matInput placeholder="Hand*">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            
+                        
+
+                         
+                           
+                            <button mat-raised-button type="submit" class="btn btn-info pull-right"
+                                [disabled]="!form.valid" >start&nbsp;&nbsp;<i class="material-icons">play_circle_filled</i></button>
+                                <!-- <mat-hint class="text-danger" *ngIf="">Invalid Bubbles Time-out</mat-hint> -->
+                            <div class="clearfix"></div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-1"> </div>
+</div>

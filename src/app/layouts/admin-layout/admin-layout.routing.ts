@@ -12,6 +12,7 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import {NewPatientComponent} from '../../new-patient/new-patient.component'
 
 import { from } from 'rxjs';
+import { StartTreatmentComponent } from './../../start-treatment/start-treatment.component';
 export const AdminLayoutRoutes: Routes = [
 
     { path: 'dashboard',      component: DashboardComponent },
@@ -20,8 +21,9 @@ export const AdminLayoutRoutes: Routes = [
     // { path: 'typography',     component: TypographyComponent },
     // { path: 'icons',          component: IconsComponent },
     // { path: 'maps',           component: MapsComponent },
-    { path: 'notifications',  component: NotificationsComponent },
+    //{ path: 'notifications',  component: NotificationsComponent },
     // { path: 'upgrade',        component: UpgradeComponent },
     { path: 'add-patient',   component: NewPatientComponent },
     { path: 'patient-area',   component: PatientAreaComponent },
+    { path: 'start-treatment',   component: StartTreatmentComponent },
 ];

@@ -1,9 +1,10 @@
 import { DataSource } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, NgSelectOption } from '@angular/forms';
 import { PatientsService } from 'app/services/patients.service';
-
-
+import { Utils } from 'app/utils';
+import { AppError } from 'common/app-error';
+//import { threadId } from 'worker_threads';
 
 declare var $: any;
 @Component({
@@ -16,6 +17,8 @@ export class PatientAreaComponent implements OnInit {
   form: FormGroup;
   tableColumns  :  string[] = ['treatment_time', 'game_name', 'hand_in_therapy','treatment_duration','bubble_timeout'];
   dataSource = [];
+  numbers=[];
+  selectedHeight;
 
   constructor(private service: PatientsService, fb: FormBuilder) {
     this.form = fb.group({
@@ -29,33 +32,65 @@ export class PatientAreaComponent implements OnInit {
       height: ['', Validators.required],
       comments: [''],
     });
+
+    for (var i = 140; i <= 200; i++) {
+      this.numbers.push(i);
+    }
   }
 
   ngOnInit(): void {
   }
 
-  onClickSearchPatient(patientID){
-    var idObject = {params:
-                {id: patientID}
-            };
-    console.log(idObject);
-    this.service.getOne(idObject).subscribe(patient => {
-      console.log(patient);
-      this.form.controls['id'].setValue(patient.id);
-      this.form.controls['firstName'].setValue(patient.first_name);
-      this.form.controls['lastName'].setValue(patient.last_name);
-      this.form.controls['email'].setValue(patient.email_address);
-      this.form.controls['address'].setValue(patient.address);
-      this.form.controls['phone'].setValue(patient.phone);
-      this.form.controls['height'].setValue(patient.height);
-      this.form.controls['comments'].setValue(patient.details);
-      this.form.controls['birthday'].setValue(patient.birthday.slice(0,10));
 
-      console.log(patient.history[0]);
-      this.dataSource = (patient.history);
-      console.log(this.dataSource);
-      
-    })
+  get id() {return this.form.get('id');}
+  get birthday() {return this.form.get('birthday');}
+  get firstName() {return this.form.get('firstName');}
+  get lastName() {return this.form.get('lastName');}
+  get email() {return this.form.get('email');}
+  get address() {return this.form.get('address');}
+  get phone() {return this.form.get('phone');}
+  get height() {return this.form.get('height');}
+  
+  upper_first_letter() {
+    if(this.firstName.value)
+      this.firstName.setValue( this.firstName.value[0].toUpperCase() + this.firstName.value.substr(1).toLowerCase());
+    if(this.lastName.value)
+      this.lastName.setValue( this.lastName.value[0].toUpperCase() + this.lastName.value.substr(1).toLowerCase());
+    }
+
+  onClickSearchPatient(patientID){
+    if(patientID != null)
+    {
+        var idObject = {params:
+                    {id: patientID}
+                };
+        console.log(idObject);
+        this.service.getOne(idObject).subscribe(patient => {
+          console.log(patient);
+          this.form.controls['id'].setValue(patient.id);
+          this.form.controls['firstName'].setValue(patient.first_name);
+          this.form.controls['lastName'].setValue(patient.last_name);
+          this.form.controls['email'].setValue(patient.email_address);
+          this.form.controls['address'].setValue(patient.address);
+          this.form.controls['phone'].setValue(patient.phone);
+          this.form.controls['height'].setValue(patient.height);
+          //this.selectedHeight = patient.height;
+          this.form.controls['comments'].setValue(patient.details);
+          this.form.controls['birthday'].setValue(patient.birthday.slice(0,10));
+
+          
+          console.log(this.form.controls.height);
+          this.dataSource = (patient.history);
+          console.log(this.dataSource);
+          
+        }, (error: AppError)=>{
+
+          console.log("here");
+          var type = 'danger';
+          var message = "Patient Is Not Exists"
+          Utils.showNotification('error', message, type);
+        });
+    }
   }
 
 
@@ -64,14 +99,19 @@ export class PatientAreaComponent implements OnInit {
     var patientDetails = this.form.value;
     console.log(patientDetails);
     this.service.update(patientDetails).subscribe(patient => {
-    
-      //var message = 'Patient: '+patient.firstName +' '+patient.lastName+ " added successfly"
-      //console.log(message);
-      //new AlertPopupComponent(message, 'how_to_reg', type);
-      //this.showNotification('top','center', type, message, 'how_to_reg')
+      var type = 'success';
+      var message = 'Patient: '+patient.firstName +' '+patient.lastName+ " updated successfly"
+      Utils.showNotification('how_to_reg', message, type);
+    }, (error: AppError)=>{
+
+      console.log("here");
+      var type = 'danger';
+      var message = "Problem Occurred While Trying To Update Details"
+      Utils.showNotification('error', message, type);
     });
+
+
     console.log("Update patient finish");
-
   }
-
+  
 }

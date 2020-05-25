@@ -1,3 +1,4 @@
+import { TreatmentService } from 'app/services/treatment.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,6 +25,7 @@ import { DataService } from './services/data.service';
 import { PatientsService } from './services/patients.service';
 import { AppErrorHandler } from 'common/app-error-handler';
 import { TerapistService } from './services/terapist.service';
+import { StartTreatmentComponent } from './start-treatment/start-treatment.component';
 
 
 @NgModule({
@@ -42,6 +44,7 @@ import { TerapistService } from './services/terapist.service';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    //StartTreatmentComponent,
     // NewPatientComponent,
 
   ],
@@ -49,6 +52,7 @@ import { TerapistService } from './services/terapist.service';
     DataService,
     PatientsService,
     TerapistService,
+    TreatmentService,
     { provide: ErrorHandler, useClass: AppErrorHandler},
   ],
   bootstrap: [AppComponent]
