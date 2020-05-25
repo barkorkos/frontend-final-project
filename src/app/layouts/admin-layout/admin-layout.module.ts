@@ -19,6 +19,8 @@ import {NewPatientComponent} from '../../new-patient/new-patient.component';
 import { PatientAreaComponent } from 'app/patient-area/patient-area.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { StartTreatmentComponent } from '../../start-treatment/start-treatment.component';
+import { LoginComponent } from 'app/login/login.component';
+
 
 @NgModule({
   imports: [

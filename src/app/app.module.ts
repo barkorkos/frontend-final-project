@@ -15,17 +15,19 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 
 import { NotificationsComponent } from './notifications/notifications.component';
-
-import {
-  AgmCoreModule
-} from '@agm/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';import { AgmCoreModule } from '@agm/core';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { DataService } from './services/data.service';
 import { PatientsService } from './services/patients.service';
 import { AppErrorHandler } from 'common/app-error-handler';
 import { TerapistService } from './services/terapist.service';
+
 import { StartTreatmentComponent } from './start-treatment/start-treatment.component';
+
+import { LoginComponent } from './login/login.component';
+
 
 
 @NgModule({
@@ -34,6 +36,7 @@ import { StartTreatmentComponent } from './start-treatment/start-treatment.compo
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    MatInputModule,
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
@@ -44,9 +47,7 @@ import { StartTreatmentComponent } from './start-treatment/start-treatment.compo
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    //StartTreatmentComponent,
-    // NewPatientComponent,
-
+    LoginComponent,
   ],
   providers: [
     DataService,
