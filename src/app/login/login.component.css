@@ -1,0 +1,9 @@
+body {
+    background-image: url("/src/assets/img/login-back.jpg");
+    /* background-color: #cccccc; */
+   }
+ .card{
+     margin-top: 100px;
+     width: 400px;
+     height: 400px;
+ }

@@ -14,16 +14,15 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 
 import { NotificationsComponent } from './notifications/notifications.component';
-
-import {
-  AgmCoreModule
-} from '@agm/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';import { AgmCoreModule } from '@agm/core';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { DataService } from './services/data.service';
 import { PatientsService } from './services/patients.service';
 import { AppErrorHandler } from 'common/app-error-handler';
 import { TerapistService } from './services/terapist.service';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -32,6 +31,7 @@ import { TerapistService } from './services/terapist.service';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    MatInputModule,
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
@@ -42,6 +42,7 @@ import { TerapistService } from './services/terapist.service';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    LoginComponent,
     // NewPatientComponent,
 
   ],
