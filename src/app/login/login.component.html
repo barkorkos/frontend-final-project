@@ -29,11 +29,17 @@
                             <div class="col-1"></div>
                           </div>
                       </div>
+
                       <center><mat-hint class="text-danger" *ngIf="invalidLogin"><b>Invalid username and/or password.</b></mat-hint></center>
-                     
-                      <center><button mat-raised-button type="submit" class="btn btn-info mt-4" [disabled]="!form.valid">Login</button></center>
-                      <div class="clearfix"></div>
-                  </form>
+                        
+                      <center>
+                        <button mat-raised-button type="submit" class="btn btn-info mt-4" [disabled]="!form.valid">Login</button>
+                        <br><br><br><a href="/#/signup">Don't Have an Account? Sing-up here!</a>
+                      </center>
+                        <div class="clearfix"></div>
+                        
+                    </form>
+                   
               </div>
           </div>
       </div>

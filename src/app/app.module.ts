@@ -27,6 +27,7 @@ import { TerapistService } from './services/terapist.service';
 import { StartTreatmentComponent } from './start-treatment/start-treatment.component';
 
 import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 
 
 
@@ -49,6 +50,7 @@ import { LoginComponent } from './login/login.component';
     AppComponent,
     AdminLayoutComponent,
     LoginComponent,
+    SignupComponent,
   ],
   providers: [
     DataService,

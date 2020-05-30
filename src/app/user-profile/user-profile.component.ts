@@ -14,7 +14,7 @@ export class UserProfileComponent implements OnInit {
   
   updateDetailsForm: FormGroup;
   changePasswordForm: FormGroup;
-  terapist = {};
+  terapist = {password: ''};
   constructor(fb: FormBuilder, private service: TerapistService) { 
     this.updateDetailsForm = fb.group({
       id: ['', Validators.required],
@@ -25,19 +25,19 @@ export class UserProfileComponent implements OnInit {
       phone: ['', [Validators.required, Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-/0-9]*$')]],
     }); 
     this.changePasswordForm = fb.group({
-      oldPassword: ['', Validators.required],
+      oldPassword: ['', [Validators.required,]],
       newPassword: ['', [Validators.required, Validators.pattern('^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$')]],
       confirmPassword: ['', Validators.required],
     }, {
-      validator: PasswordValidators.passwordsShouldMatch
+      validator: PasswordValidators.passwordsShouldMatch,
     }); 
-
 
   }
 
   ngOnInit() {
     this.service.getOne({params: {id: '313536492'}}).subscribe(terapist => {
       this.terapist = terapist;
+      console.log(terapist);
       this.updateDetailsForm.controls['id'].disable();
     });
   }
@@ -52,14 +52,28 @@ export class UserProfileComponent implements OnInit {
 
 
   
-  changePassword() { }
+  changePassword() { 
+    var terapistPassword = this.changePasswordForm.getRawValue();
+    terapistPassword['id'] =  this.updateDetailsForm.get('id').value;
+    console.log(terapistPassword);
+    this.service.update(terapistPassword).subscribe(() => {
+      var type = 'success';
+      var message = "Password Updated Successfly";
+      Utils.showNotification('how_to_reg', message, type);
+
+    }, (error: AppError) => {
+        var type = 'danger';
+        var message = "Error Occure will Changing Password";
+        Utils.showNotification('error', message, type);
+      
+    });  }
   
   updateDetails() {
     var terapistDetails = this.updateDetailsForm.getRawValue();
     console.log(terapistDetails);
     this.service.update(terapistDetails).subscribe(terapist => {
       var type = 'success';
-      var message = "Profile Updated Successfly"
+      var message = "Profile Updated Successfly";
       Utils.showNotification('how_to_reg', message, type);
       this.terapist = terapist;
       this.terapist['last_name'] = terapist['lastName'];
@@ -68,7 +82,7 @@ export class UserProfileComponent implements OnInit {
 
     }, (error: AppError) => {
         var type = 'danger';
-        var message = "Error Occure will Updating Details"
+        var message = "Error Occure will Updating Details";
         Utils.showNotification('error', message, type);
       
     });
