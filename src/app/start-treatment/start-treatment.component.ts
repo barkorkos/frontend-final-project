@@ -13,6 +13,7 @@ export class StartTreatmentComponent implements OnInit {
 
 
   form: FormGroup;
+  searchform: FormGroup;
   patientInTerapy: any;
 
     constructor(private service: TreatmentService, fb: FormBuilder) {
@@ -26,6 +27,10 @@ export class StartTreatmentComponent implements OnInit {
         oldHand: [''],
         newHand: ['', Validators.required],
        
+    });
+
+    this.searchform = fb.group({
+      searchInput:  ['', Validators.required],
     });
   }
   
@@ -45,13 +50,15 @@ export class StartTreatmentComponent implements OnInit {
   get oldHand() {return this.form.get('oldHand');}
   get newHand() {return this.form.get('newHand');}
 
+  get searchInput() {return this.searchform.get('searchInput');}
 
-  onSearchID(patientID){
+  onSearchID(){
           var idObject = {params:
-            {id: patientID}
+            {id: this.searchInput.value}
         };
       console.log(idObject);
-      this.patientInTerapy = patientID;
+      this.patientInTerapy = idObject.params.id;
+      console.log("the patient id: "+  this.patientInTerapy)
       this.form.controls['oldDate'].setValue(null);
       this.form.controls['oldDurationTime'].setValue(null);
       this.form.controls['oldBubbleTimeOut'].setValue(null);
@@ -63,6 +70,13 @@ export class StartTreatmentComponent implements OnInit {
       this.service.getOne(idObject).subscribe(patient => {
       console.log(patient);
       console.log("####");
+      // if(patient == 'noTreatYet')
+      // {
+      //   console.log("5554444666");
+      //   var type = 'primary';
+      //   var message = "History of treatment's is not exist for this patient yet. This is his first treatment!"
+      //   Utils.showNotification('error', message, type);
+      // }
       if(patient != null)
       {
         console.log("111");
@@ -71,37 +85,53 @@ export class StartTreatmentComponent implements OnInit {
         this.form.controls['oldBubbleTimeOut'].setValue(patient.bubble_timeout);
         this.form.controls['oldHand'].setValue(patient.hand_in_therapy);
       }
-      else {
+      else 
+      {
         console.log("333");
+   
       }
       }, (error: AppError)=>{
 
           console.log("here");
           var type = 'danger';
-          var message = "Patient Is Not Exists"
+          var message = "Patient Is Not Exists, Enter ID Again."
           Utils.showNotification('error', message, type); 
       });
   }
 
   onClickStart(){
-       console.log(this.patientInTerapy);
-       if(this.patientInTerapy!= null)
+              
+    console.log("&^&^&"+this.searchInput.value);
+       if(this.searchInput.value!= null)
        {
             var treatmentOject = {id: this.patientInTerapy,
                                  patientDetails: this.form.value};
 
             console.log(treatmentOject);
             this.service.create(treatmentOject).subscribe(patient => {
-            var type = 'success';
+           if(patient!=null){
+              var type = 'success';
             var message = "The Patient Can Start The Treatment Now"
             Utils.showNotification('play_circle_filled', message, type);
-        
+           }
+           else{
+            var type = 'danger';
+            var message = "This patient's Id is not exist in our department"
+            Utils.showNotification('error', message, type);
+           }
         }, (error: AppError) => {
             var type = 'danger';
             var message = ""
             Utils.showNotification('error', message, type);
           
         });
+      }
+      else
+      {
+        console.log("no id");
+        var type = 'danger';
+        var message = "Please Enter Patient ID"
+        Utils.showNotification('error', message, type); 
       }
     };
 

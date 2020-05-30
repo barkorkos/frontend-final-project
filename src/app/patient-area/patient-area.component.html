@@ -3,16 +3,17 @@
     <div class="row">
       <div class="col-1"></div>
       <!-- <div class="collapse navbar-collapse justify-content-end" id="navigation"> -->
-      <form class="navbar-form">
+    <form [formGroup]="searchForm" (ngSubmit)="onClickSearchPatient()">
+      <!-- <form class="navbar-form"> -->
         <div class="input-group no-border">
-          <input #patientToSearch type="text" value="" class="form-control" placeholder="Search by ID...">
-          <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon"
-            (click)="onClickSearchPatient(patientToSearch.value)">
+          <input  formControlName="searchInput" type="text" class="form-control" placeholder="Search by ID...">
+          <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon" [disabled]="!searchForm.valid">
             <i class="material-icons">search</i>
             <div class="ripple-container"></div>
           </button>
         </div>
-      </form>
+      <!-- </form> -->
+    </form>
       <!-- </div> -->
     </div>
 
@@ -56,7 +57,7 @@
 
                     <div class="col-md-3">
                       <mat-form-field class="example-full-width">
-                        <input formControlName="id" matInput placeholder="ID*">
+                        <input formControlName="id" matInput placeholder="ID*" disabled>
                       </mat-form-field>
                     </div>
 
@@ -129,7 +130,7 @@
                       </mat-form-field>
                     </div>
                   </div>
-                  <button mat-raised-button type="submit" class="btn btn-info pull-right" [disabled]="!form.valid">Update</button>
+                  <button mat-raised-button type="submit" class="btn btn-info pull-right" [disabled]="!form.valid || !searchForm.valid">Update</button>
                   <div class="clearfix"></div>
                 </form>
               </div>
@@ -185,6 +186,7 @@
                         <mat-row *matRowDef="let row; columns: tableColumns"></mat-row>
                       </mat-table>
 
+                      
 
                     </div>
                     <!-- </div>

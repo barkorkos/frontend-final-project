@@ -46,7 +46,23 @@ export class DataService {
       .toPromise()
       .catch(this.handleError);
   }
-  
+
+  login(credentials) {
+    console.log(credentials);
+    return this.http.post(this.url, credentials)
+    .map(response => {
+      console.log(response.json());
+      let result = response.json();
+      if(result && result.token){
+        localStorage.setItem('token',result.token);
+        return true;
+      }
+      return false;
+    });
+  }
+
+
+
   private handleError(error: Response) {
 
     if (error.status === 400)

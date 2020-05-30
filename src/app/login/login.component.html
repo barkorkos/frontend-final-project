@@ -6,16 +6,16 @@
               <div class="card-header card-header-info">
 
                   <h4 class="card-title">
-                    <img class="mr-3" src="/assets/img/logo.png" width="45" height="45"/>Hand Rehab System</h4>
+                    <img class="mr-3" src="/assets/img/logo.png" width="45" height="45"/><b>Hand Rehab System</b></h4>
               </div>
               <div class="card-body">
-                  <form>
+                  <form [formGroup]="form" (ngSubmit)="signIn()">
                       <div><center><h3><b>Login</b></h3></center></div>
                       <div class="row">
                           <div class="col-1"></div>
                           <div class="col-10">
                               <mat-form-field class="example-full-width mt-2 mb-2">
-                                <input matInput placeholder="ID" type="text">
+                                <input formControlName="id" matInput placeholder="ID" type="text">
                               </mat-form-field>
                           </div>
                           <div class="col-1"></div>
@@ -24,13 +24,14 @@
                         <div class="col-1"></div>
                           <div class="col-10">
                             <mat-form-field class="example-full-width mt-2 mb-4">
-                              <input  matInput placeholder="Password" type="password">
+                              <input formControlName="password" matInput placeholder="Password" type="password">
                             </mat-form-field>
                             <div class="col-1"></div>
                           </div>
                       </div>
-          
-                      <center><button mat-raised-button type="submit" class="btn btn-info mt-4">Login</button></center>
+                      <center><mat-hint class="text-danger" *ngIf="invalidLogin"><b>Invalid username and/or password.</b></mat-hint></center>
+                     
+                      <center><button mat-raised-button type="submit" class="btn btn-info mt-4" [disabled]="!form.valid">Login</button></center>
                       <div class="clearfix"></div>
                   </form>
               </div>

@@ -15,10 +15,12 @@ declare var $: any;
 export class PatientAreaComponent implements OnInit {
   
   form: FormGroup;
+  searchForm: FormGroup;
   tableColumns  :  string[] = ['treatment_time', 'game_name', 'hand_in_therapy','treatment_duration','bubble_timeout'];
   dataSource = [];
   numbers=[];
   selectedHeight;
+
 
   constructor(private service: PatientsService, fb: FormBuilder) {
     this.form = fb.group({
@@ -33,14 +35,18 @@ export class PatientAreaComponent implements OnInit {
       comments: [''],
     });
 
+    this.searchForm = fb.group({
+      searchInput: ['', Validators.required],
+    });
+
     for (var i = 140; i <= 200; i++) {
       this.numbers.push(i);
     }
   }
 
   ngOnInit(): void {
+    this.form.controls['id'].disable();
   }
-
 
   get id() {return this.form.get('id');}
   get birthday() {return this.form.get('birthday');}
@@ -51,6 +57,8 @@ export class PatientAreaComponent implements OnInit {
   get phone() {return this.form.get('phone');}
   get height() {return this.form.get('height');}
   
+  get searchInput() {return this.searchForm.get('searchInput');}
+
   upper_first_letter() {
     if(this.firstName.value)
       this.firstName.setValue( this.firstName.value[0].toUpperCase() + this.firstName.value.substr(1).toLowerCase());
@@ -58,13 +66,26 @@ export class PatientAreaComponent implements OnInit {
       this.lastName.setValue( this.lastName.value[0].toUpperCase() + this.lastName.value.substr(1).toLowerCase());
     }
 
-  onClickSearchPatient(patientID){
-    if(patientID != null)
-    {
+  onClickSearchPatient(){
+
         var idObject = {params:
-                    {id: patientID}
+                    {id: this.searchInput.value}
                 };
         console.log(idObject);
+
+          this.form.controls['id'].setValue(null);
+          this.form.controls['firstName'].setValue(null);
+          this.form.controls['lastName'].setValue(null);
+          this.form.controls['email'].setValue(null);
+          this.form.controls['address'].setValue(null);
+          this.form.controls['phone'].setValue(null);
+          this.form.controls['height'].setValue(null);
+          //this.selectedHeight = patient.height;
+          this.form.controls['comments'].setValue(null);
+          this.form.controls['birthday'].setValue(null);
+
+          this.dataSource = (null);
+
         this.service.getOne(idObject).subscribe(patient => {
           console.log(patient);
           this.form.controls['id'].setValue(patient.id);
@@ -90,7 +111,6 @@ export class PatientAreaComponent implements OnInit {
           var message = "Patient Is Not Exists"
           Utils.showNotification('error', message, type);
         });
-    }
   }
 
 

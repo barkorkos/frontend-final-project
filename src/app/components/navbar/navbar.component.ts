@@ -122,4 +122,8 @@ export class NavbarComponent implements OnInit {
       }
       return '';
     }
+
+    logout() {
+         localStorage.removeItem('token');
+    }
 }
