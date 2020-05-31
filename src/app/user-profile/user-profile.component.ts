@@ -4,6 +4,7 @@ import { TerapistService } from 'app/services/terapist.service';
 import { Utils } from 'app/utils';
 import { AppError } from 'common/app-error';
 import { PasswordValidators } from './password.validators';
+import { AuthService } from 'app/services/auth.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -15,7 +16,7 @@ export class UserProfileComponent implements OnInit {
   updateDetailsForm: FormGroup;
   changePasswordForm: FormGroup;
   terapist = {password: ''};
-  constructor(fb: FormBuilder, private service: TerapistService) { 
+  constructor(fb: FormBuilder, private service: TerapistService, private authService: AuthService) { 
     this.updateDetailsForm = fb.group({
       id: ['', Validators.required],
       firstName: ['', Validators.required],
@@ -35,11 +36,16 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service.getOne({params: {id: '313536492'}}).subscribe(terapist => {
-      this.terapist = terapist;
-      console.log(terapist);
-      this.updateDetailsForm.controls['id'].disable();
-    });
+    if(this.authService.isLoggedIn())
+    {
+      var id = this.authService.currentUser.iss;
+      console.log("The id of the current user is:"+id);
+      this.service.getOne({params: {id: id}}).subscribe(terapist => {
+        this.terapist = terapist;
+        console.log(terapist);
+        this.updateDetailsForm.controls['id'].disable();
+      });
+    }
   }
   
   
@@ -60,6 +66,17 @@ export class UserProfileComponent implements OnInit {
       var type = 'success';
       var message = "Password Updated Successfly";
       Utils.showNotification('how_to_reg', message, type);
+      this.terapist.password = this.changePasswordForm.controls['newPassword'].value;
+
+      this.changePasswordForm.controls['oldPassword'].setValue(null);
+      this.changePasswordForm.controls['newPassword'].setValue(null);
+      this.changePasswordForm.controls['confirmPassword'].setValue(null);
+
+     // this.changePasswordForm.clearValidators();
+      this.changePasswordForm.reset();
+      Object.keys(this.changePasswordForm.controls).forEach(key => {
+        this.changePasswordForm.controls[key].setErrors(null)
+      });
 
     }, (error: AppError) => {
         var type = 'danger';

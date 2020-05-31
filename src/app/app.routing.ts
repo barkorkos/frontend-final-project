@@ -10,7 +10,7 @@ import { SignupComponent } from './signup/signup.component';
 const routes: Routes =[
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {
@@ -24,6 +24,10 @@ const routes: Routes =[
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'dashboard',
+    component: AdminLayoutComponent,
   },
   {
     path: 'signup',

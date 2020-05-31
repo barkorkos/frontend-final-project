@@ -10,7 +10,7 @@ import { Utils } from 'app/utils';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   invalidLogin: boolean;
   form: FormGroup;
 
@@ -21,6 +21,13 @@ export class LoginComponent {
     });
   }
 
+  ngOnInit(): void {
+    if(this.service.isLoggedIn())
+    {
+      this.router.navigate(['/dashboard']);
+    }
+  }
+
   signIn()
   {
     var credentials = this.form.value;
@@ -29,7 +36,7 @@ export class LoginComponent {
       {
         console.log(result);
         console.log('&&&&&&&&');
-        this.router.navigate(['/']);
+        this.router.navigate(['/dashboard']);
       }
       else
       {
