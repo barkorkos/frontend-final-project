@@ -20,8 +20,14 @@ import { PatientAreaComponent } from 'app/patient-area/patient-area.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { StartTreatmentComponent } from '../../start-treatment/start-treatment.component';
 import { LoginComponent } from 'app/login/login.component';
+import { FusionChartsModule } from "angular-fusioncharts";
 
+import * as FusionCharts from "fusioncharts";
+import * as charts from "fusioncharts/fusioncharts.charts";
+import * as FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
 
+import {NgApexchartsModule} from 'ng-apexcharts';
+FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);
 @NgModule({
   imports: [
     CommonModule,
@@ -37,6 +43,8 @@ import { LoginComponent } from 'app/login/login.component';
     MatTableModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    NgApexchartsModule,
+    FusionChartsModule,
 
   ],
   declarations: [
