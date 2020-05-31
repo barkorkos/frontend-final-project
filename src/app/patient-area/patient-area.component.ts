@@ -1,20 +1,50 @@
 import { DataSource } from '@angular/cdk/collections';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, NgSelectOption } from '@angular/forms';
 import { PatientsService } from 'app/services/patients.service';
 import { Utils } from 'app/utils';
 import { AppError } from 'common/app-error';
 
 //import { threadId } from 'worker_threads';
+import {
+  ApexAxisChartSeries,
+  ApexChart,
+  ChartComponent,
+  ApexDataLabels,
+  ApexPlotOptions,
+  ApexYAxis,
+  ApexLegend,
+  ApexStroke,
+  ApexXAxis,
+  ApexFill,
+  ApexTooltip
+} from "ng-apexcharts";
 
 declare var $: any;
+
+export type ChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  dataLabels: ApexDataLabels;
+  plotOptions: ApexPlotOptions;
+  yaxis: ApexYAxis;
+  xaxis: ApexXAxis;
+  fill: ApexFill;
+  tooltip: ApexTooltip;
+  stroke: ApexStroke;
+  legend: ApexLegend;
+};
+
+
+
 @Component({
   selector: 'app-patient-area',
   templateUrl: './patient-area.component.html',
   styleUrls: ['./patient-area.component.css']
 })
 export class PatientAreaComponent implements OnInit {
-  
+  @ViewChild("chart") chart: ChartComponent;
+  public chartOptions: Partial<ChartOptions>;
   form: FormGroup;
   searchForm: FormGroup;
   tableColumns  :  string[] = ['treatment_time', 'game_name', 'hand_in_therapy','treatment_duration','bubble_timeout'];
@@ -43,6 +73,77 @@ export class PatientAreaComponent implements OnInit {
     for (var i = 140; i <= 200; i++) {
       this.numbers.push(i);
     }
+    this.chartOptions = {
+      series: [
+        {
+          name: "poped bubbles",
+          data: []
+        },
+      ],
+      chart: {
+        type: "bar",
+        height: 350,
+        toolbar: {
+          show: true,
+          offsetX: 0,
+          offsetY: 0,
+          tools: {
+            download: true,
+            selection: true,
+            zoom: true,
+            zoomin: true,
+            zoomout: true,
+            pan: true,
+            // reset: true | '<img src="/static/icons/reset.png" width="20">',
+            // customIcons: []
+          },
+          autoSelected: 'zoom' 
+        },
+        zoom: {
+          enabled: true,
+          type: 'x',  
+          autoScaleYaxis: false,  
+          zoomedArea: {
+            fill: {
+              color: '#90CAF9',
+              opacity: 0.4
+            },
+            stroke: {
+              color: '#0D47A1',
+              opacity: 0.4,
+              width: 1
+            }
+          }
+        },
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: "55%",
+          endingShape: "rounded"
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ["transparent"]
+      },
+      xaxis: {
+        categories: []
+      },
+      yaxis: {
+        title: {
+          text: "Bubbles"
+        }
+      },
+
+
+    };
+
+
   }
 
   ngOnInit(): void {
@@ -104,6 +205,7 @@ export class PatientAreaComponent implements OnInit {
           console.log(this.form.controls.height);
           this.dataSource = (patient.history);
           console.log(this.dataSource);
+          this.createChart(patient.history);
           
         }, (error: AppError)=>{
 
@@ -113,7 +215,83 @@ export class PatientAreaComponent implements OnInit {
           Utils.showNotification('error', message, type);
         });
   }
+  
+  createChart(patientHistory){
+    var poped_bubbles = this.jsonTo3Dtable(patientHistory[0].total_bubbles_table);
+    var chartCategories = [];
+    var poped_value = []
+    for (var key in poped_bubbles){
+      poped_value.push(poped_bubbles[key]);
+      chartCategories.push("("+key.split("^").join(",")+")");
+    }
+    this.chartOptions = {
+      series: [
+        {
+          name: "poped bubbles",
+          data: poped_value
+        },
+      ],
+      chart: {
+        type: "bar",
+        height: 350,
+        
+        zoom: {
+          enabled: true,
+          type: 'x',
+          autoScaleYaxis: false,
+          zoomedArea:{
+            fill:{
+              color: '#90CAF9',
+              opacity: 0.4
+            },
+            stroke: {
+              color: '#0D47A1',
+              opacity: 0.4,
+              width: 1,
+            }
+            
+          }
+          
+        } 
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: "90%",
+          endingShape: "rounded"
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ["transparent"]
+      },
+      xaxis: {
+        categories: chartCategories
+      },
+      yaxis: {
+        title: {
+          text: "Bubbles Number"
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      tooltip: {
+        y: {
+          formatter: function(val) {
+            return  val + " Bubbles";
+          }
+        }
+      },
+      // responsive: true,
+      // maintainAspectRatio: true
 
+    };
+  }
 
   updatePatientDetails(){
     console.log("update patient ");
@@ -133,6 +311,23 @@ export class PatientAreaComponent implements OnInit {
 
 
     console.log("Update patient finish");
+  }
+
+  jsonTo3Dtable(table){
+    var n = parseInt(table.split(',').pop().split(':')[0].split('^').pop())+1
+    var dictionary = this.jsonToDictionary(table);
+    return dictionary;
+  }
+  
+  jsonToDictionary(table){
+    var items = table.split(',');
+    var dictionary= {};
+    for (var i=0 ; i<items.length ; i++)
+    {
+      var keyValue = items[i].split(':');
+      dictionary[keyValue[0]]=parseInt(keyValue[1]);
+    }
+    return dictionary;
   }
   
 }

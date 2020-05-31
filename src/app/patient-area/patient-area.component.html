@@ -38,7 +38,7 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a mat-button class="nav-link" href="#Results analysis" data-toggle="tab" class="card-title">
+                    <a mat-button class="nav-link" href="#resultsAnalysis" data-toggle="tab" class="card-title">
                       <i class="material-icons">restore</i>Results Analysis
                       <div class="ripple-container"></div>
                     </a>
@@ -202,6 +202,31 @@
                 </div>
                 <!-- </div> -->
               </div>
+              
+              <div class="tab-pane" id="resultsAnalysis">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="chartWrapper">
+                    <div id="chart">
+                      <apx-chart
+                        [series]="chartOptions.series"
+                        [chart]="chartOptions.chart"
+                        [dataLabels]="chartOptions.dataLabels"
+                        [plotOptions]="chartOptions.plotOptions"
+                        [yaxis]="chartOptions.yaxis"
+                        [legend]="chartOptions.legend"
+                        [fill]="chartOptions.fill"
+                        [stroke]="chartOptions.stroke"
+                        [tooltip]="chartOptions.tooltip"
+                        [xaxis]="chartOptions.xaxis"
+                      ></apx-chart>
+                    </div>
+                  </div>
+
+                  </div>
+                </div>
+              </div>
+
 
 
 
