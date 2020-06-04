@@ -73,6 +73,7 @@ export class PatientAreaComponent implements OnInit {
     for (var i = 140; i <= 200; i++) {
       this.numbers.push(i);
     }
+
     this.chartOptions = {
       series: [
         {
@@ -247,7 +248,7 @@ export class PatientAreaComponent implements OnInit {
             stroke: {
               color: '#0D47A1',
               opacity: 0.4,
-              width: 1,
+              width: 10,
             }
             
           }

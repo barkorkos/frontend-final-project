@@ -9,12 +9,17 @@ import { AppError } from 'common/app-error';
   templateUrl: './start-treatment.component.html',
   styleUrls: ['./start-treatment.component.css']
 })
+
+
 export class StartTreatmentComponent implements OnInit {
 
 
   form: FormGroup;
   searchform: FormGroup;
   patientInTerapy: any;
+  handSide: any;
+  noTreatment: any;
+ 
 
     constructor(private service: TreatmentService, fb: FormBuilder) {
     this.form = fb.group({
@@ -25,13 +30,15 @@ export class StartTreatmentComponent implements OnInit {
         oldBubbleTimeOut: [''],
         newBubbleTimeOut: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
         oldHand: [''],
-        newHand: ['', Validators.required],
+        //newHand: ['', Validators.required],
        
     });
 
     this.searchform = fb.group({
       searchInput:  ['', Validators.required],
     });
+
+    this.handSide = "left";
   }
   
   ngOnInit(): void {
@@ -48,7 +55,7 @@ export class StartTreatmentComponent implements OnInit {
   get oldBubbleTimeOut() {return this.form.get('oldBubbleTimeOut');}
   get newBubbleTimeOut() {return this.form.get('newBubbleTimeOut');}
   get oldHand() {return this.form.get('oldHand');}
-  get newHand() {return this.form.get('newHand');}
+  get newHand() {return this.handSide;}
 
   get searchInput() {return this.searchform.get('searchInput');}
 
@@ -56,12 +63,16 @@ export class StartTreatmentComponent implements OnInit {
           var idObject = {params:
             {id: this.searchInput.value}
         };
+
+      this.noTreatment=null;
+        
       console.log(idObject);
       this.patientInTerapy = idObject.params.id;
       console.log("the patient id: "+  this.patientInTerapy)
       this.form.controls['oldDate'].setValue(null);
       this.form.controls['oldDurationTime'].setValue(null);
       this.form.controls['oldBubbleTimeOut'].setValue(null);
+      this.form.controls['oldHand'].setValue(null);
 
       this.form.controls['newDate'].setValue(null);
       this.form.controls['newDurationTime'].setValue(null);
@@ -77,7 +88,13 @@ export class StartTreatmentComponent implements OnInit {
       //   var message = "History of treatment's is not exist for this patient yet. This is his first treatment!"
       //   Utils.showNotification('error', message, type);
       // }
-      if(patient != null)
+      if(patient=="noTreat")
+      {
+        console.log("333");
+        this.noTreatment = "This patient has no treatment history yet!";
+   
+      }
+      else if(patient != null)
       {
         console.log("111");
         this.form.controls['oldDate'].setValue(patient.treatment_time.slice(0,10));
@@ -88,12 +105,11 @@ export class StartTreatmentComponent implements OnInit {
         this.form.controls['newDate'].setValue(patient.treatment_time.slice(0,10));
         this.form.controls['newDurationTime'].setValue(patient.treatment_duration);
         this.form.controls['newBubbleTimeOut'].setValue(patient.bubble_timeout);
-        this.form.controls['newHand'].setValue(patient.hand_in_therapy);
+        
       }
-      else 
-      {
-        console.log("333");
-   
+      
+      else{
+        console.log("555");
       }
       }, (error: AppError)=>{
 
@@ -105,7 +121,10 @@ export class StartTreatmentComponent implements OnInit {
   }
 
   onClickStart(){
-              
+    this.noTreatment=null;
+    var x = this.form.value;
+    x['newHand']=this.handSide;
+    console.log(x);
     console.log("&^&^&"+this.searchInput.value);
        if(this.searchInput.value!= null)
        {
@@ -141,6 +160,12 @@ export class StartTreatmentComponent implements OnInit {
     };
 
 
+    pickHand(event)
+    {
+      this.handSide=event;
+      console.log(this.handSide);
+    }
   
 
 }
+
