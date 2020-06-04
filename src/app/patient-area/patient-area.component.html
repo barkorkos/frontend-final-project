@@ -39,7 +39,7 @@
                   </li>
                   <li class="nav-item">
                     <a mat-button class="nav-link" href="#resultsAnalysis" data-toggle="tab" class="card-title">
-                      <i class="material-icons">restore</i>Results Analysis
+                      <i class="material-icons">equalizer</i>Results Analysis
                       <div class="ripple-container"></div>
                     </a>
                   </li>
@@ -205,25 +205,93 @@
               
               <div class="tab-pane" id="resultsAnalysis">
                 <div class="row">
-                  <div class="col-md-12">
-                    <div class="chartWrapper">
-                    <div id="chart">
-                      <apx-chart
-                        [series]="chartOptions.series"
-                        [chart]="chartOptions.chart"
-                        [dataLabels]="chartOptions.dataLabels"
-                        [plotOptions]="chartOptions.plotOptions"
-                        [yaxis]="chartOptions.yaxis"
-                        [legend]="chartOptions.legend"
-                        [fill]="chartOptions.fill"
-                        [stroke]="chartOptions.stroke"
-                        [tooltip]="chartOptions.tooltip"
-                        [xaxis]="chartOptions.xaxis"
-                      ></apx-chart>
-                    </div>
+                  <div class="col-3">
+                    <form>
+                      <br>
+                   
+                    <mat-form-field>
+                      <mat-label>Treatment Date</mat-label>
+                      <mat-select (selectionChange)="selectDate($event)">
+                        <mat-option *ngFor="let date of chartDates; let i = index" [value]="i">{{date}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </form>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <br>
+                    <h4 class="ml-4" style="font-family:Arial Black"><u><b>Modeling Patient Results According to Regions</b></u></h4>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-5 col-md-12">
+                    <app-cube3d></app-cube3d>
+                  </div>
+                  <div  class="col-lg-7 col-md-12">
+                    <br>
+                    <br>
+                    <div class="avgChartWrapper"> 
+                      <div class="avgChart"> 
+                          <canvas baseChart
+                          [datasets]="avgbarChartData"
+                          [labels]="avgbarChartLabels"
+                          [options]="avgbarChartOptions"
+                          [plugins]="avgbarChartPlugins"
+                          [legend]="avgbarChartLegend"
+                          [chartType]="avgbarChartType"
+                          [colors]="doughnutChartColor">
+                          </canvas>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <hr class="style14">
+                <br>
+                <br>
+
+                <div class="row">
+                  <div class="col-12">
+                    <br>
+                    <h4 class="ml-4" style="font-family:Arial Black"><u><b>Modeling Patient Results According to Points in Game's Space</b></u></h4>
+                    <br>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-8">
+
+                    <div class="myChartWrapper"> 
+                      <div class="myChart"> 
+                          <canvas baseChart height="7"
+                          [datasets]="barChartData"
+                          [labels]="barChartLabels"
+                          [options]="barChartOptions"
+                          [plugins]="barChartPlugins"
+                          [legend]="barChartLegend"
+                          [chartType]="barChartType">
+                         
+                          </canvas>
+                        </div>
+                      </div>
+
+                      <br>
+                      <br>
+                      <br>
                   </div>
 
+                  <div class="col-4">
+                    <br><br><br>
+                    <div class="pic">
+                    <img src="../../assets/img/cubeModel.png" width="350px" height="300px">
+                    </div>
+                    <br>
+                    <br>
+                    <center><h4><b>Space Modeling</b></h4></center>
                   </div>
+
                 </div>
               </div>
 

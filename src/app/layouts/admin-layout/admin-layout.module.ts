@@ -21,12 +21,17 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { StartTreatmentComponent } from '../../start-treatment/start-treatment.component';
 import { LoginComponent } from 'app/login/login.component';
 import { FusionChartsModule } from "angular-fusioncharts";
-
+import { ChartsModule } from 'ng2-charts';
+// import { ChartModule } from '@syncfusion/ej2-angular-charts';
 import * as FusionCharts from "fusioncharts";
 import * as charts from "fusioncharts/fusioncharts.charts";
 import * as FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
+// import { ChartComponent } from '@syncfusion/ej2-angular-charts';
+// import { CategoryService, LegendService, TooltipService } from '@syncfusion/ej2-angular-charts';
+// import { DataLabelService, LineSeriesService} from '@syncfusion/ej2-angular-charts';
 
 import {NgApexchartsModule} from 'ng-apexcharts';
+import { Cube3dComponent } from 'app/cube3d/cube3d.component';
 FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);
 @NgModule({
   imports: [
@@ -43,8 +48,9 @@ FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);
     MatTableModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    ChartsModule,
     NgApexchartsModule,
-    FusionChartsModule,
+
 
   ],
   declarations: [
@@ -54,7 +60,11 @@ FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);
     NewPatientComponent,
     PatientAreaComponent,
     StartTreatmentComponent,
-  ]
+    Cube3dComponent,
+    
+  ],
+  // providers: [ CategoryService, LegendService, TooltipService, DataLabelService, LineSeriesService ]
+
 })
 
 export class AdminLayoutModule {}

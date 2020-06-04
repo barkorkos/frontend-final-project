@@ -28,6 +28,7 @@ import { StartTreatmentComponent } from './start-treatment/start-treatment.compo
 
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { Cube3dComponent } from './cube3d/cube3d.component';
 
 
 
@@ -51,6 +52,7 @@ import { SignupComponent } from './signup/signup.component';
     AdminLayoutComponent,
     LoginComponent,
     SignupComponent,
+    // Cube3dComponent,
   ],
   providers: [
     DataService,

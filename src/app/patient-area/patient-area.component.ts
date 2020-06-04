@@ -4,35 +4,11 @@ import { FormGroup, FormBuilder, Validators, NgSelectOption } from '@angular/for
 import { PatientsService } from 'app/services/patients.service';
 import { Utils } from 'app/utils';
 import { AppError } from 'common/app-error';
-//import { threadId } from 'worker_threads';
-import {
-  ApexAxisChartSeries,
-  ApexChart,
-  ChartComponent,
-  ApexDataLabels,
-  ApexPlotOptions,
-  ApexYAxis,
-  ApexLegend,
-  ApexStroke,
-  ApexXAxis,
-  ApexFill,
-  ApexTooltip
-} from "ng-apexcharts";
+import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
+import { Label, Color } from 'ng2-charts';
+
 
 declare var $: any;
-
-export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  dataLabels: ApexDataLabels;
-  plotOptions: ApexPlotOptions;
-  yaxis: ApexYAxis;
-  xaxis: ApexXAxis;
-  fill: ApexFill;
-  tooltip: ApexTooltip;
-  stroke: ApexStroke;
-  legend: ApexLegend;
-};
 
 
 
@@ -42,17 +18,161 @@ export type ChartOptions = {
   styleUrls: ['./patient-area.component.css']
 })
 export class PatientAreaComponent implements OnInit {
-  @ViewChild("chart") chart: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
+  
   form: FormGroup;
   searchForm: FormGroup;
   tableColumns  :  string[] = ['treatment_time', 'game_name', 'hand_in_therapy','treatment_duration','bubble_timeout'];
   dataSource = [];
   numbers=[];
+  chartDates = [];
   selectedHeight;
+  patientDetails;
+
+  barChartOptions: ChartOptions = {
+    responsive: true,
+    
+    scales:{
+      xAxes: [{
+        ticks:{
+          padding:5,
+          stepSize: 1
+        },
+        scaleLabel: {
+          display: true,
+          labelString: "Point in Space",
+          fontFamily: "Arial Black",
+          fontSize: 16,
+          
+        }
+      }],
+      yAxes: [{
+        ticks:{
+          stepSize: 1,
+          
+        },
+        scaleLabel: {
+          display: true,
+          labelString: "Number of Bubbles",
+          fontFamily: "Arial Black",
+          fontSize: 18,
+        },
+        
+      }],
+      
+    
+      
+    }
+  };
+  barChartLabels: Label[] = [];
+  barChartType: ChartType = 'bar';
+  barChartLegend = true;
+  barChartPlugins = [];
+  barChartData: ChartDataSets[] = [
+    { barThickness: 15, data: [], label: 'Total Bubles',  backgroundColor: 'rgba(0, 112, 192, 0.7)' , hoverBackgroundColor:'rgba(0, 112, 192, 0.8)'},
+    { barThickness: 15, data: [], label: 'Poped Bubles', backgroundColor: 'rgba(214, 144, 236, 0.7)', hoverBackgroundColor:'rgba(214, 144, 236, 0.8)' }
+  ];
+  
+
+  public doughnutChartColor = [
+    {
+      backgroundColor: [
+        'rgba(112, 48, 160, 1)',
+        'rgba(112, 173, 71, 1)',
+        'rgba(255, 192, 0, 1)',
+        'rgba(0, 112, 192, 1)',
+        'rgba(104, 218, 242,1)',
+        'rgba(192, 0, 0, 1)',
+        'rgba(255, 39, 190, 1)',
+        'rgba(255, 255, 0, 1)',
+        'rgba(143, 143, 143, 1)',
+        'rgba(214, 144, 236, 1)',
+        'rgba(88, 255, 5, 1)',
+        'rgba(112, 48, 160, 1)',
+      ] 
+    },
+    {
+      backgroundColor: [
+        'rgba(112, 48, 160, 0.4)',
+        'rgba(112, 173, 71, 0.4)',
+        'rgba(255, 192, 0, 0.4)',
+        'rgba(0, 112, 192, 0.4)',
+        'rgba(104, 218, 242, 0.4)',
+        'rgba(192, 0, 0, 0.4)',
+        'rgba(255, 39, 190, 0.4)',
+        'rgba(255, 255, 0, 0.4)',
+        'rgba(143, 143, 143, 0.4)',
+        'rgba(214, 144, 236, 0.4)',
+        'rgba(88, 255, 5, 0.4)',
+        'rgba(112, 48, 160, 0.4)',
+      ] 
+    }
+  ];
+
+   avgbarChartOptions: ChartOptions = {
+    responsive: true,
+    
+    scales:{
+      xAxes: [{
+        ticks:{
+          padding:5,
+          stepSize: 1
+        },
+        scaleLabel: {
+          display: true,
+          labelString: "Regions in Space(See 3D Rectangle)",
+          fontFamily: "Arial Black",
+          fontSize: 16,
+          
+        }
+      }],
+      yAxes: [{
+        ticks:{
+          stepSize: 10,
+          
+        },
+        scaleLabel: {
+          display: true,
+          labelString: "Number of Bubbles",
+          fontFamily: "Arial Black",
+          fontSize: 18,
+        },
+        
+      }],
+      
+    
+      
+    }
+  };
+  avgbarChartLabels: Label[] = ['front-top-left',
+                                'back-top-left',
+                                'front-top-center',
+                                'back-top-center',
+                                'front-top-right',
+                                'back-top-right',
+                                'front-bottom-left',
+                                'back-bottom-left',
+                                'front-bottom-center',
+                                'back-bottom-center',
+                                'front-bottom-right',
+                                'back-bottom-right'];
+                        
+  avgbarChartType: ChartType = 'bar';
+  avgbarChartLegend = true;
+  avgbarChartPlugins = [];
+  avgbarChartData: ChartDataSets[] = [
+    { barThickness: 15, data: [], label: 'Total Bubles' },
+    { barThickness: 15, data: [], label: 'Poped Bubles' }
+  ];
+
+
+
+
+
 
 
   constructor(private service: PatientsService, fb: FormBuilder) {
+
+
     this.form = fb.group({
       id: ['', Validators.required],
       birthday: ['', Validators.required],
@@ -72,82 +192,11 @@ export class PatientAreaComponent implements OnInit {
     for (var i = 140; i <= 200; i++) {
       this.numbers.push(i);
     }
-    this.chartOptions = {
-      series: [
-        {
-          name: "poped bubbles",
-          data: []
-        },
-      ],
-      chart: {
-        type: "bar",
-        height: 350,
-        toolbar: {
-          show: true,
-          offsetX: 0,
-          offsetY: 0,
-          tools: {
-            download: true,
-            selection: true,
-            zoom: true,
-            zoomin: true,
-            zoomout: true,
-            pan: true,
-            // reset: true | '<img src="/static/icons/reset.png" width="20">',
-            // customIcons: []
-          },
-          autoSelected: 'zoom' 
-        },
-        zoom: {
-          enabled: true,
-          type: 'x',  
-          autoScaleYaxis: false,  
-          zoomedArea: {
-            fill: {
-              color: '#90CAF9',
-              opacity: 0.4
-            },
-            stroke: {
-              color: '#0D47A1',
-              opacity: 0.4,
-              width: 1
-            }
-          }
-        },
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: "55%",
-          endingShape: "rounded"
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ["transparent"]
-      },
-      xaxis: {
-        categories: []
-      },
-      yaxis: {
-        title: {
-          text: "Bubbles"
-        }
-      },
-
-
-    };
 
 
   }
 
-  ngOnInit(): void {
-    this.form.controls['id'].disable();
-  }
+  ngOnInit(): void { this.form.controls['id'].disable();}
 
   get id() {return this.form.get('id');}
   get birthday() {return this.form.get('birthday');}
@@ -160,6 +209,7 @@ export class PatientAreaComponent implements OnInit {
   
   get searchInput() {return this.searchForm.get('searchInput');}
 
+
   upper_first_letter() {
     if(this.firstName.value)
       this.firstName.setValue( this.firstName.value[0].toUpperCase() + this.firstName.value.substr(1).toLowerCase());
@@ -168,7 +218,6 @@ export class PatientAreaComponent implements OnInit {
     }
 
   onClickSearchPatient(){
-
         var idObject = {params:
                     {id: this.searchInput.value}
                 };
@@ -181,7 +230,6 @@ export class PatientAreaComponent implements OnInit {
           this.form.controls['address'].setValue(null);
           this.form.controls['phone'].setValue(null);
           this.form.controls['height'].setValue(null);
-          //this.selectedHeight = patient.height;
           this.form.controls['comments'].setValue(null);
           this.form.controls['birthday'].setValue(null);
 
@@ -196,7 +244,6 @@ export class PatientAreaComponent implements OnInit {
           this.form.controls['address'].setValue(patient.address);
           this.form.controls['phone'].setValue(patient.phone);
           this.form.controls['height'].setValue(patient.height);
-          //this.selectedHeight = patient.height;
           this.form.controls['comments'].setValue(patient.details);
           this.form.controls['birthday'].setValue(patient.birthday.slice(0,10));
 
@@ -204,7 +251,14 @@ export class PatientAreaComponent implements OnInit {
           console.log(this.form.controls.height);
           this.dataSource = (patient.history);
           console.log(this.dataSource);
-          this.createChart(patient.history);
+          for(var i=0; i< patient.history.length; i++){
+            this.chartDates.push(patient.history[i].treatment_time.slice(0,16).replace("T"," "));
+          }
+
+          this.createChart(patient.history[patient.history.length-1]);
+          this.createAvgChart(patient.history[patient.history.length-1]);
+          this.patientDetails = patient.history;
+
           
         }, (error: AppError)=>{
 
@@ -216,80 +270,41 @@ export class PatientAreaComponent implements OnInit {
   }
   
   createChart(patientHistory){
-    var poped_bubbles = this.jsonTo3Dtable(patientHistory[0].total_bubbles_table);
-    var chartCategories = [];
-    var poped_value = []
-    for (var key in poped_bubbles){
-      poped_value.push(poped_bubbles[key]);
-      chartCategories.push("("+key.split("^").join(",")+")");
-    }
-    this.chartOptions = {
-      series: [
-        {
-          name: "poped bubbles",
-          data: poped_value
-        },
-      ],
-      chart: {
-        type: "bar",
-        height: 350,
-        
-        zoom: {
-          enabled: true,
-          type: 'x',
-          autoScaleYaxis: false,
-          zoomedArea:{
-            fill:{
-              color: '#90CAF9',
-              opacity: 0.4
-            },
-            stroke: {
-              color: '#0D47A1',
-              opacity: 0.4,
-              width: 1,
-            }
-            
-          }
-          
-        } 
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: "90%",
-          endingShape: "rounded"
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ["transparent"]
-      },
-      xaxis: {
-        categories: chartCategories
-      },
-      yaxis: {
-        title: {
-          text: "Bubbles Number"
-        }
-      },
-      fill: {
-        opacity: 1
-      },
-      tooltip: {
-        y: {
-          formatter: function(val) {
-            return  val + " Bubbles";
-          }
-        }
-      },
-      // responsive: true,
-      // maintainAspectRatio: true
+    this.barChartData[0].data = [];
+    this.barChartData[1].data = [];
+    this.barChartLabels = [];
+    var total_bubbles = this.jsonTo3Dtable(patientHistory.total_bubbles_table);
+    var poped_bubbles = this.jsonTo3Dtable(patientHistory.poped_bubbles_table);
 
-    };
+    for (var key in poped_bubbles){
+      this.barChartData[0].data.push(total_bubbles[key]);
+      this.barChartData[1].data.push(poped_bubbles[key]);
+      this.barChartLabels.push("("+key.split("^").join(",")+")");
+    }
+    
+  }
+
+
+    createAvgChart(patientHistory){
+      this.avgbarChartData[0].data = [];
+      this.avgbarChartData[1].data = [];
+      console.log("create!!!!!!!!!!!!!!!!");
+      var total_bubbles = this.createGraphData(patientHistory.total_bubbles_table);
+      console.log(total_bubbles)
+      var poped_bubbles = this.createGraphData(patientHistory.poped_bubbles_table);
+
+      for(var key in total_bubbles){
+        this.avgbarChartData[0].data.push(total_bubbles[key]);
+        this.avgbarChartData[1].data.push(poped_bubbles[key]);
+      }
+  
+    }
+
+
+
+  selectDate(sorce){
+    this.createChart(this.patientDetails[sorce.value]);
+    this.createAvgChart(this.patientDetails[sorce.value]);
   }
 
   updatePatientDetails(){
@@ -327,6 +342,49 @@ export class PatientAreaComponent implements OnInit {
       dictionary[keyValue[0]]=parseInt(keyValue[1]);
     }
     return dictionary;
+  }
+  
+  createGraphData(table){
+    var n = parseInt(table.split(',').pop().split(':')[0].split('^').pop());
+    var data = this.jsonTo3Dtable(table);
+    var areas = {
+      'front-up-left':0,
+      'back-up-left':0,
+      'front-up-center':0,
+      'back-up-center':0,
+      'front-up-right':0,
+      'back-up-right':0,
+      'front-down-left':0,
+      'back-down-left':0,
+      'front-down-center':0,
+      'back-down-center':0,
+      'front-down-right':0,
+      'back-down-right':0,
+    }
+    for(var key in data){
+      var area = '';
+      var point = key.split('^');
+      if(parseInt(point[2]) <= (n/2))
+        area += 'front-';
+      else
+        area += 'back-';
+      
+      if(parseInt(point[1]) <= n)
+        area += 'down-';
+      else
+        area += 'up-';
+
+      if(parseInt(point[0]) <= 2*n/3)
+        area += 'left';
+      else if(parseInt(point[0]) <= (4*n/3))
+        area += 'center' ;
+      else
+        area += 'right';
+
+      areas[area] += data[key];
+    }
+
+    return areas;
   }
   
 }
