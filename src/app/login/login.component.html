@@ -10,7 +10,7 @@
               </div>
               <div class="card-body">
                   <form [formGroup]="form" (ngSubmit)="signIn()">
-                      <div><center><h3><b>Login</b></h3></center></div>
+                      <div><div style="text-align: center;"><h3><b>Login</b></h3></div></div>
                       <div class="row">
                           <div class="col-1"></div>
                           <div class="col-10">
@@ -30,12 +30,12 @@
                           </div>
                       </div>
 
-                      <center><mat-hint class="text-danger" *ngIf="invalidLogin"><b>Invalid username and/or password.</b></mat-hint></center>
+                      <div style="text-align: center;"><mat-hint class="text-danger" *ngIf="invalidLogin"><b>Invalid username and/or password.</b></mat-hint></div>
                         
-                      <center>
+                      <div style="text-align: center;">
                         <button mat-raised-button type="submit" class="btn btn-info mt-4" [disabled]="!form.valid">Login</button>
                         <br><br><br><a href="/#/signup">Don't Have an Account? Sing-up here!</a>
-                      </center>
+                      </div>
                         <div class="clearfix"></div>
                         
                     </form>

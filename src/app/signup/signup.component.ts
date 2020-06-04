@@ -30,11 +30,14 @@ export class SignupComponent implements OnInit {
 
   }
   upper_first_letter() {
-    if(this.firstName.value)
-      this.firstName.setValue( this.firstName.value[0].toUpperCase() + this.firstName.value.substr(1).toLowerCase());
-    if(this.lastName.value)
-      this.lastName.setValue( this.lastName.value[0].toUpperCase() + this.lastName.value.substr(1).toLowerCase());
+    if(this.signupForm.get('firstName').value){
+    this.signupForm.controls['firstName'].setValue( this.firstName.value[0].toUpperCase() + this.firstName.value.substr(1).toLowerCase());
     }
+    if(this.signupForm.get('lastName').value){
+      this.signupForm.controls['lastName'].setValue( this.lastName.value[0].toUpperCase() + this.lastName.value.substr(1).toLowerCase());
+      }
+    }
+
   ngOnInit(): void {
   }
 

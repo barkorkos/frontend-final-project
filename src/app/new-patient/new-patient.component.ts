@@ -59,11 +59,14 @@ export class NewPatientComponent implements OnInit {
 
 
   upper_first_letter() {
-    if(this.firstName.value)
-      this.firstName.setValue( this.firstName.value[0].toUpperCase() + this.firstName.value.substr(1).toLowerCase());
-    if(this.lastName.value)
-      this.lastName.setValue( this.lastName.value[0].toUpperCase() + this.lastName.value.substr(1).toLowerCase());
+    if(this.form.get('firstName').value){
+    this.form.controls['firstName'].setValue( this.firstName.value[0].toUpperCase() + this.firstName.value.substr(1).toLowerCase());
     }
+    if(this.form.get('lastName').value){
+      this.form.controls['lastName'].setValue( this.lastName.value[0].toUpperCase() + this.lastName.value.substr(1).toLowerCase());
+      }
+    }
+
   addNewPatient(){
     var patientDetails = this.form.value;
     this.service.create(patientDetails).subscribe(patient => {

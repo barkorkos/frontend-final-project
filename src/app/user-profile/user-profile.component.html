@@ -13,13 +13,13 @@
                           <div class="row">
                               <div class="col-6">
                                 <mat-form-field class="example-full-width mb-0">
-                                    <input  formControlName="id" matInput placeholder="ID" [(ngModel)]="terapist.user_id" disabled>
+                                    <input  formControlName="id" matInput placeholder="ID" disabled>
                                   </mat-form-field>
 
                               </div>
                               <div class="col-6">
                                   <mat-form-field class="example-full-width">
-                                    <input  formControlName="email" matInput placeholder="Email address" type="email" [(ngModel)]="terapist.email">
+                                    <input  formControlName="email" matInput placeholder="Email address" type="email">
                                     <mat-hint class="text-danger" *ngIf="email.errors?.email">Invalid Email</mat-hint>
                                   </mat-form-field>
                               </div>
@@ -27,17 +27,13 @@
                           <div class="row">
                               <div class="col-6">
                                 <mat-form-field class="example-full-width">
-                                  <input  formControlName="firstName"  matInput placeholder="First Name" type="text" [(ngModel)]="terapist.first_name">
-                                  <!-- <input  formControlName="firstName" *ngIf="!updateDetailsForm.firstName.requierd"  matInput placeholder="First Name" type="text" [(ngModel)]="terapist.first_name"> -->
-                                  <!-- <input  formControlName="firstName" *ngIf="updateDetailsForm.firstName.requierd"  matInput placeholder="First Name (requierd)" type="text" [(ngModel)]="terapist.first_name"> -->
+                                  <input  formControlName="firstName"  matInput placeholder="First Name" type="text">
 
                                 </mat-form-field>
                               </div>
                               <div class="col-6">
                                 <mat-form-field class="example-full-width">
-                                  <input formControlName="lastName"   matInput placeholder="Last Name" type="text" [(ngModel)]="terapist.last_name">
-                                  <!-- <input formControlName="lastName" *ngIf="!updateDetailsForm.lastName.requierd"   matInput placeholder="Last Name" type="text" [(ngModel)]="terapist.last_name"> -->
-                                  <!-- <input formControlName="lastName" *ngIf="updateDetailsForm.lastName.requierd"   matInput placeholder="Last Name (requierd)" type="text" [(ngModel)]="terapist.last_name"> -->
+                                  <input formControlName="lastName"   matInput placeholder="Last Name" type="text">
 
                                 </mat-form-field>
                               </div>
@@ -45,14 +41,13 @@
                           <div class="row">
                               <div class="col-6">
                                 <mat-form-field class="example-full-width">
-                                  <input formControlName="address"  matInput placeholder="Address" type="text" [(ngModel)]="terapist.address"> 
-                                  <!-- <input formControlName="address" *ngIf="!updateDetailsForm.address.requierd"  matInput placeholder="Address" type="text" [(ngModel)]="terapist.address">  -->
-                                  <!-- <input formControlName="address" *ngIf="updateDetailsForm.address.requierd"  matInput placeholder="Address (requierd)" type="text" [(ngModel)]="terapist.address">  -->
+                                  <input formControlName="address"  matInput placeholder="Address" type="text"> 
+
                                 </mat-form-field>
                               </div>
                               <div class="col-6">
                                 <mat-form-field class="example-full-width">
-                                  <input formControlName="phone"   matInput placeholder="Phone Number" type="text" [(ngModel)]="terapist.phone">
+                                  <input formControlName="phone"   matInput placeholder="Phone Number" type="text">
                                   <mat-hint class="text-danger" *ngIf="phone.errors?.pattern">Invalid Phone Number</mat-hint>
                                 </mat-form-field>
                               </div>

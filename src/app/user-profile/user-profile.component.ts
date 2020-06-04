@@ -42,7 +42,6 @@ export class UserProfileComponent implements OnInit {
       console.log("The id of the current user is:"+id);
       this.service.getOne({params: {id: id}}).subscribe(terapist => {
         this.terapist = terapist;
-        console.log(terapist);
         this.updateDetailsForm.controls['id'].disable();
       });
     }
@@ -99,10 +98,18 @@ export class UserProfileComponent implements OnInit {
       var type = 'success';
       var message = "Profile Updated Successfly";
       Utils.showNotification('how_to_reg', message, type);
-      this.terapist = terapist;
-      this.terapist['last_name'] = terapist['lastName'];
-      this.terapist['first_name'] = terapist['firstName'];
-      this.terapist['user_id'] = terapist['id'];
+
+      this.updateDetailsForm.controls['last_name'].setValue(terapist['lastName']);
+      this.updateDetailsForm.controls['first_name'].setValue(terapist['firstName']);
+      this.updateDetailsForm.controls['user_id'].setValue(terapist['id']);
+      this.updateDetailsForm.controls['email'].setValue(terapist['email']);
+      this.updateDetailsForm.controls['phone'].setValue(terapist['phone']);
+      this.updateDetailsForm.controls['address'].setValue(terapist['address']);
+
+      // this.terapist = terapist;
+      // this.terapist['last_name'] = terapist['lastName'];
+      // this.terapist['first_name'] = terapist['firstName'];
+      // this.terapist['user_id'] = terapist['id'];
 
     }, (error: AppError) => {
         var type = 'danger';
