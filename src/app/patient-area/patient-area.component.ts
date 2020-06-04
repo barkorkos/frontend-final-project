@@ -210,6 +210,19 @@ export class PatientAreaComponent implements OnInit {
   get searchInput() {return this.searchForm.get('searchInput');}
 
 
+
+  set id(value) {this.form.get('id').setValue(value);}
+  set birthday(value) { this.form.get('birthday').setValue(value);}
+  set firstName(value) { this.form.get('firstName').setValue(value);}
+  set lastName(value) { this.form.get('lastName').setValue(value);}
+  set email(value) { this.form.get('email').setValue(value);}
+  set address(value) { this.form.get('address').setValue(value);}
+  set phone(value) { this.form.get('phone').setValue(value);}
+  set height(value) { this.form.get('height').setValue(value);}
+  
+  set searchInput(value) { this.searchForm.get('searchInput').setValue(value);}
+
+
   upper_first_letter() {
     if(this.firstName.value)
       this.firstName.setValue( this.firstName.value[0].toUpperCase() + this.firstName.value.substr(1).toLowerCase());

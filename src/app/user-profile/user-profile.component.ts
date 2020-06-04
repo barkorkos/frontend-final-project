@@ -56,6 +56,13 @@ export class UserProfileComponent implements OnInit {
   get newPassword() {return this.changePasswordForm.get('newPassword');}
   get confirmPassword() {return this.changePasswordForm.get('confirmPassword');}
 
+  set phone(value) { this.updateDetailsForm.get('phone').setValue(value);}
+  set email(value) { this.updateDetailsForm.get('email').setValue(value);}
+
+  set oldPassword(value) { this.changePasswordForm.get('oldPassword').setValue(value);}
+  set newPassword(value) { this.changePasswordForm.get('newPassword').setValue(value);}
+  set confirmPassword(value) { this.changePasswordForm.get('confirmPassword').setValue(value);}
+
 
   
   changePassword() { 

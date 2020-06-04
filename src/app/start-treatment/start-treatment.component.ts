@@ -59,6 +59,20 @@ export class StartTreatmentComponent implements OnInit {
 
   get searchInput() {return this.searchform.get('searchInput');}
 
+
+
+  set oldDate(value) { this.form.get('oldDate').setValue(value);}
+  set newDate(value) { this.form.get('newDate').setValue(value);}
+  set oldDurationTime(value) { this.form.get('oldDurationTime').setValue(value);}
+  set newDurationTime(value) { this.form.get('newDurationTime').setValue(value);}
+  set oldBubbleTimeOut(value) { this.form.get('oldBubbleTimeOut').setValue(value);}
+  set newBubbleTimeOut(value) { this.form.get('newBubbleTimeOut').setValue(value);}
+  set oldHand(value) { this.form.get('oldHand').setValue(value);}
+  // set newHand() {return this.handSide;}
+
+  set searchInput(value) {this.searchform.get('searchInput').setValue(value);}
+
+
   onSearchID(){
           var idObject = {params:
             {id: this.searchInput.value}

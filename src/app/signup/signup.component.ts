@@ -60,4 +60,13 @@ export class SignupComponent implements OnInit {
 
   get newPassword() {return this.signupForm.get('newPassword');}
   get confirmPassword() {return this.signupForm.get('confirmPassword');}
+
+
+  set firstName(value) { this.signupForm.get('firstName').setValue(value);}
+  set lastName(value) { this.signupForm.get('lastName').setValue(value);}
+  set phone(value) { this.signupForm.get('phone').setValue(value);}
+  set email(value) { this.signupForm.get('email').setValue(value);}
+
+  set newPassword(value) { this.signupForm.get('newPassword').setValue(value);}
+  set confirmPassword(value) { this.signupForm.get('confirmPassword').setValue(value);}
 }
