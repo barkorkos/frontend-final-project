@@ -5,6 +5,6 @@ import { Http } from '@angular/http';
 @Injectable()
 export class PatientsService extends DataService{
   constructor(http: Http){
-    super('http://localhost:8080/patients', http);
+    super('https://vr-final-project.herokuapp.com/patients', http);
   }
 }

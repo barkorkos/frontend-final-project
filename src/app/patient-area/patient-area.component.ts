@@ -273,6 +273,8 @@ export class PatientAreaComponent implements OnInit {
     this.barChartData[0].data = [];
     this.barChartData[1].data = [];
     this.barChartLabels = [];
+    if(patientHistory){
+
     var total_bubbles = this.jsonTo3Dtable(patientHistory.total_bubbles_table);
     var poped_bubbles = this.jsonTo3Dtable(patientHistory.poped_bubbles_table);
 
@@ -281,15 +283,18 @@ export class PatientAreaComponent implements OnInit {
       this.barChartData[1].data.push(poped_bubbles[key]);
       this.barChartLabels.push("("+key.split("^").join(",")+")");
     }
+  }
 
     
   }
 
 
     createAvgChart(patientHistory){
+      
       this.avgbarChartData[0].data = [];
       this.avgbarChartData[1].data = [];
-      console.log("create!!!!!!!!!!!!!!!!");
+      if(patientHistory){
+       
       var total_bubbles = this.createGraphData(patientHistory.total_bubbles_table);
       console.log(total_bubbles)
       var poped_bubbles = this.createGraphData(patientHistory.poped_bubbles_table);
@@ -298,7 +303,7 @@ export class PatientAreaComponent implements OnInit {
         this.avgbarChartData[0].data.push(total_bubbles[key]);
         this.avgbarChartData[1].data.push(poped_bubbles[key]);
       }
-  
+    }
     }
 
 

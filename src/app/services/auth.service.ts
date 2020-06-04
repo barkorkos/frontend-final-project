@@ -9,7 +9,7 @@ import { JwtHelper, tokenNotExpired } from 'angular2-jwt'
 export class AuthService extends DataService{
 
   constructor(http: Http) {
-    super('http://localhost:8080/login', http);
+    super('https://vr-final-project.herokuapp.com/login', http);
    }
 
    isLoggedIn() {
