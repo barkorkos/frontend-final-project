@@ -25,8 +25,10 @@
                                             <i class="material-icons">search</i>
                                             <div class="ripple-container"></div>
                                         </button>
+                                      
                                     </div>
                                 </form>
+                                <p style="color:#ac00e6; font-family:verdana"><b><i>{{noTreatment}}</i></b></p>
                                 <!-- </form> -->
                             </div>
                             <div class="col-md-2"></div>
@@ -115,15 +117,24 @@
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-2"></div>
-                                <div class="col-md-5">
-                                    <!-- <mat-radio-group aria-label="Select an option">
-                                        <mat-radio-button value="1">Right</mat-radio-button>
-                                        <mat-radio-button value="2">Left</mat-radio-button>
-                                      </mat-radio-group>
-                                    -->
-                                    <mat-form-field class="example-full-width mb-0">
-                                        <input formControlName="newHand" matInput placeholder="Hand*">
-                                    </mat-form-field>
+                                <div class="col-md-5"><br>
+                                                                   
+                                        <!-- <input formControlName="newHand" matInput placeholder="Hand*"> -->
+                                        <!-- <mat-radio-group aria-label="Select an option">
+                                            <mat-radio-button value="1">Left Hand</mat-radio-button>&nbsp;&nbsp;&nbsp;
+                                            <mat-radio-button value="2">Right Hand</mat-radio-button>
+                                          </mat-radio-group> -->
+                                          <div class="radio-group" (change)="pickHand($event.target.value)">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="left" checked="true">
+                                                Left Hand
+                                            </label>&nbsp;&nbsp;&nbsp;
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value="right">
+                                                Right Hand
+                                            </label>
+                                        </div>
+                                        
                                 </div>
                             </div>
 

@@ -8,6 +8,7 @@ import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label, Color } from 'ng2-charts';
 
 
+
 declare var $: any;
 
 
@@ -193,7 +194,6 @@ export class PatientAreaComponent implements OnInit {
       this.numbers.push(i);
     }
 
-
   }
 
   ngOnInit(): void { this.form.controls['id'].disable();}
@@ -281,6 +281,7 @@ export class PatientAreaComponent implements OnInit {
       this.barChartData[1].data.push(poped_bubbles[key]);
       this.barChartLabels.push("("+key.split("^").join(",")+")");
     }
+
     
   }
 
@@ -299,6 +300,7 @@ export class PatientAreaComponent implements OnInit {
       }
   
     }
+
 
 
 
