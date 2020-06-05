@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TerapistService } from 'app/services/terapist.service';
 import { Utils } from 'app/utils';
@@ -11,7 +11,7 @@ import { AuthService } from 'app/services/auth.service';
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css']
 })
-export class UserProfileComponent implements OnInit,  AfterViewInit {
+export class UserProfileComponent implements OnInit {
   
   updateDetailsForm: FormGroup;
   changePasswordForm: FormGroup;
