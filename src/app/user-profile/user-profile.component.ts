@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TerapistService } from 'app/services/terapist.service';
 import { Utils } from 'app/utils';
@@ -11,12 +11,13 @@ import { AuthService } from 'app/services/auth.service';
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css']
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent implements OnInit,  AfterViewInit {
   
   updateDetailsForm: FormGroup;
   changePasswordForm: FormGroup;
   terapist = {password: ''};
   constructor(fb: FormBuilder, private service: TerapistService, private authService: AuthService) { 
+
     this.updateDetailsForm = fb.group({
       id: ['', Validators.required],
       firstName: ['', Validators.required],
@@ -31,17 +32,28 @@ export class UserProfileComponent implements OnInit {
       confirmPassword: ['', Validators.required],
     }, {
       validator: PasswordValidators.passwordsShouldMatch,
-    }); 
+    });
+    
+    
+
+    // this.updateDetailsForm.controls['id'].disable();
 
   }
 
   ngOnInit() {
+    console.log("on init!");
     if(this.authService.isLoggedIn())
     {
       var id = this.authService.currentUser.iss;
       console.log("The id of the current user is:"+id);
       this.service.getOne({params: {id: id}}).subscribe(terapist => {
         this.terapist = terapist;
+        this.updateDetailsForm.controls['lastName'].setValue(this.terapist['last_name']);
+        this.updateDetailsForm.controls['firstName'].setValue(this.terapist['first_name']);
+        this.updateDetailsForm.controls['id'].setValue(this.terapist['user_id']);
+        this.updateDetailsForm.controls['email'].setValue(this.terapist['email']);
+        this.updateDetailsForm.controls['phone'].setValue(this.terapist['phone']);
+        this.updateDetailsForm.controls['address'].setValue(this.terapist['address']);
         this.updateDetailsForm.controls['id'].disable();
       });
     }

@@ -237,7 +237,7 @@ export class PatientAreaComponent implements OnInit {
                     {id: this.searchInput.value}
                 };
         console.log(idObject);
-
+        this.chartDates=[];
           this.form.controls['id'].setValue(null);
           this.form.controls['firstName'].setValue(null);
           this.form.controls['lastName'].setValue(null);
