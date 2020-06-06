@@ -116,7 +116,7 @@ export class StartTreatmentComponent implements OnInit {
         this.form.controls['oldBubbleTimeOut'].setValue(patient.bubble_timeout);
         this.form.controls['oldHand'].setValue(patient.hand_in_therapy);
 
-        this.form.controls['newDate'].setValue(patient.treatment_time.slice(0,10));
+        //this.form.controls['newDate'].setValue(patient.treatment_time.slice(0,10));
         this.form.controls['newDurationTime'].setValue(patient.treatment_duration);
         this.form.controls['newBubbleTimeOut'].setValue(patient.bubble_timeout);
         
