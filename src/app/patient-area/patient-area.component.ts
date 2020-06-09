@@ -69,8 +69,8 @@ export class PatientAreaComponent implements OnInit {
   barChartLegend = true;
   barChartPlugins = [];
   barChartData: ChartDataSets[] = [
-    { barThickness: 15, data: [], label: 'Total Bubles',  backgroundColor: 'rgba(0, 112, 192, 0.7)' , hoverBackgroundColor:'rgba(0, 112, 192, 0.8)'},
-    { barThickness: 15, data: [], label: 'Poped Bubles', backgroundColor: 'rgba(214, 144, 236, 0.7)', hoverBackgroundColor:'rgba(214, 144, 236, 0.8)' }
+    { barThickness: 5, data: [], label: 'Total Bubles',  backgroundColor: 'rgba(0, 112, 192, 0.7)' , hoverBackgroundColor:'rgba(0, 112, 192, 0.8)'},
+    { barThickness: 5, data: [], label: 'Poped Bubles', backgroundColor: 'rgba(214, 144, 236, 0.7)', hoverBackgroundColor:'rgba(214, 144, 236, 0.8)' }
   ];
   
 
