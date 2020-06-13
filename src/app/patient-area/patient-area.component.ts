@@ -333,6 +333,8 @@ export class PatientAreaComponent implements OnInit {
     console.log("update patient ");
     var patientDetails = this.form.value;
     console.log(patientDetails);
+    patientDetails['id'] = document.getElementById("id-update").value;
+    console.log(document.getElementById("id-update").value);
     this.service.update(patientDetails).subscribe(patient => {
       var type = 'success';
       var message = 'Patient: '+patient.firstName +' '+patient.lastName+ " updated successfly"
